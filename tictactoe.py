@@ -2,6 +2,56 @@
 
 import random
 
+class PlayerOne:
+    def getPlayerOneMove(board, self):
+        # Let the player type in his move.
+        move = ' '
+        while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
+            print('What is your next move? (1-9)')
+            move = input()
+        return int(move)
+    
+    #code for player 1
+   
+class PlayerTwo:
+    def getPlayerTwoMove(board, computerLetter, self):
+    # Given a board and the computer's letter, determine where to move and return that move.
+    if player1Letter == 'X':
+        player2Letter = 'O'
+    else:
+        player2Letter = 'X'
+
+    # Here is our algorithm for our Tic Tac Toe AI:
+    # First, check if we can win in the next move
+    for i in range(1, 10):
+        copy = getBoardCopy(board)
+        if isSpaceFree(copy, i):
+            makeMove(copy, computerLetter, i)
+            if isWinner(copy, computerLetter):
+                return i
+
+    # Check if the player could win on his next move, and block them.
+    for i in range(1, 10):
+        copy = getBoardCopy(board)
+        if isSpaceFree(copy, i):
+            makeMove(copy, playerLetter, i)
+            if isWinner(copy, playerLetter):
+                return i
+
+    # Try to take one of the corners, if they are free.
+    move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
+    if move != None:
+        return move
+
+    # Try to take the center, if it is free.
+    if isSpaceFree(board, 5):
+        return 5
+
+    # Move on one of the sides.
+    return chooseRandomMoveFromList(board, [2, 4, 6, 8])
+
+    #code for player 2
+
 def drawBoard(board):
     # This function prints out the board that it was passed.
 
@@ -35,9 +85,9 @@ def inputPlayerLetter():
 def whoGoesFirst():
     # Randomly choose the player who goes first.
     if random.randint(0, 1) == 0:
-        return 'computer'
+        return 'player1'
     else:
-        return 'player'
+        return 'player2'
 
 def playAgain():
     # This function returns True if the player wants to play again, otherwise it returns False.
@@ -72,14 +122,6 @@ def isSpaceFree(board, move):
     # Return true if the passed move is free on the passed board.
     return board[move] == ' '
 
-def getPlayerMove(board):
-    # Let the player type in his move.
-    move = ' '
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
-        print('What is your next move? (1-9)')
-        move = input()
-    return int(move)
-
 def chooseRandomMoveFromList(board, movesList):
     # Returns a valid move from the passed list on the passed board.
     # Returns None if there is no valid move.
@@ -92,42 +134,6 @@ def chooseRandomMoveFromList(board, movesList):
         return random.choice(possibleMoves)
     else:
         return None
-
-def getComputerMove(board, computerLetter):
-    # Given a board and the computer's letter, determine where to move and return that move.
-    if computerLetter == 'X':
-        playerLetter = 'O'
-    else:
-        playerLetter = 'X'
-
-    # Here is our algorithm for our Tic Tac Toe AI:
-    # First, check if we can win in the next move
-    for i in range(1, 10):
-        copy = getBoardCopy(board)
-        if isSpaceFree(copy, i):
-            makeMove(copy, computerLetter, i)
-            if isWinner(copy, computerLetter):
-                return i
-
-    # Check if the player could win on his next move, and block them.
-    for i in range(1, 10):
-        copy = getBoardCopy(board)
-        if isSpaceFree(copy, i):
-            makeMove(copy, playerLetter, i)
-            if isWinner(copy, playerLetter):
-                return i
-
-    # Try to take one of the corners, if they are free.
-    move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
-    if move != None:
-        return move
-
-    # Try to take the center, if it is free.
-    if isSpaceFree(board, 5):
-        return 5
-
-    # Move on one of the sides.
-    return chooseRandomMoveFromList(board, [2, 4, 6, 8])
 
 def isBoardFull(board):
     # Return True if every space on the board has been taken. Otherwise return False.
