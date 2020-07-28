@@ -1,8 +1,8 @@
 # Tic Tac Toe
 
 import random
-
-class PlayerOne:
+class TicTacToe:
+class PlayerOne(TicTacToe):
     def getPlayerOneMove(board, self):
         # Let the player type in his move.
         move = ' '
@@ -13,7 +13,7 @@ class PlayerOne:
     
     #code for player 1
    
-class PlayerTwo:
+class PlayerTwo(TicTacToe):
     def getPlayerTwoMove(board, computerLetter, self):
     # Given a board and the computer's letter, determine where to move and return that move.
     if player1Letter == 'X':
