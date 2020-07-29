@@ -1,6 +1,5 @@
 import random
 
-
 class Tic_Tac_Toe:
     def drawBoard(self, board):
         # "board" is a list of 10 strings representing the board (ignore index 0)
@@ -24,7 +23,7 @@ class Tic_Tac_Toe:
         if letter == 'X':
             return ['X', 'O']
         else:
-            return ['0', 'X']
+            return ['O', 'X']
 
     def whoGoesFirst(self):
         if random.randint(0, 1) == 0:
@@ -91,7 +90,7 @@ class Tic_Tac_Toe:
                     if self.isWinner(theBoard, player1Letter):
                         self.drawBoard(theBoard)
                         print("Player One has Won the Game!")
-                        break5
+                        break
                     else:
                         if self.isBoardFull(theBoard):
                             self.drawBoard(theBoard)
@@ -234,20 +233,21 @@ aigame = Tic_Tac_Toe_AI()
 
 print('''Hello! Welcome to Tic-Tac-Toe. Here is a small picture of the game boardL
 
-            |     |
-         1  |  2  |  3
-       -----|-----|-----
-         4  |  5  |  6
-       -----|-----|-----
-         7  |  8  |  9
-            |     |
+     |     |
+  1  |  2  |  3
+-----|-----|-----
+  4  |  5  |  6
+-----|-----|-----
+  7  |  8  |  9
+     |     |
 
-        To make your move, type a number between 1 and 9 to place your letter in the corresponding spot as shown in the example. 
-        ''')
+To make your move, type a number between 1 and 9 to place your letter in the corresponding spot as shown in the example. 
+''')
 
 print('''Please choose from the following: 
-         Player vs Player (Type 1)
-         Player vs Computer (Type 2)''')
+
+Player vs Player (Type 1)
+Player vs Computer (Type 2)''')
 
 option = input()
 
