@@ -1,13 +1,24 @@
 import random
+
+
 class Tic_Tac_Toe:
     def __init__(self):
         print("Initialized")
+
     def drawBoard(self, board):
-       print(self.board[1] + '|' + self.board[2] + '|' + self.board[3])
-       print('---')
-       print(self.board[4] + '|' + self.board[5] + '|' + self.board[6])
-       print('---')
-       print(self.board[7] + '|' + self.board[8] + '|' + self.board[9])
+        # "board" is a list of 10 strings representing the board (ignore index 0)
+        print('   |   |')
+        print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
+        print('   |   |')
+        print('-----------')
+        print('   |   |')
+        print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
+        print('   |   |')
+        print('-----------')
+        print('   |   |')
+        print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
+        print('   |   |')
+
     def inputPlayerLetter(self):
         letter = ''
         while not (letter == 'X' or letter == 'O'):
@@ -17,51 +28,59 @@ class Tic_Tac_Toe:
             return ['X', 'O']
         else:
             return ['0', 'X']
+
     def whoGoesFirst(self):
         if random.randint(0, 1) == 0:
             return 'player 1'
         else:
             return 'player 2'
+
     def playAgain(self):
         print('Do you want to play again?(yes or no)')
         return input().lower().startswith('y')
+
     def isWinner(self, bo, le):
-           # Given a board and a player's letter, this function returns True if that player has won.
-    # We use bo instead of board and le instead of letter so we don't have to type as much.
-        return ((self.bo[1] == self.le and self.bo[2] == self.le and self.bo[3] == self.le) or # across the top
-                (self.bo[4] == self.le and self.bo[5] == self.le and self.bo[6] == self.le) or # across the middle
-                (self.bo[7] == self.le and self.bo[8] == self.le and self.bo[9] == self.le) or # across the bottom
-                (bo[1] == le and bo[4] == le and bo[7] == le) or # down the left side
-                (bo[2] == le and bo[5] == le and bo[8] == le) or # down the middle
-                (bo[3] == le and bo[6] == le and bo[9] == le) or # down the right side
-                (bo[1] == le and bo[5] == le and bo[9] == le) or # diagonal
-                (bo[3] == le and bo[5] == le and bo[7] == le)) # diagonal
-    
+        # Given a board and a player's letter, this function returns True if that player has won.
+        # We use bo instead of board and le instead of letter so we don't have to type as much.
+        return ((bo[1] == le and bo[2] == le and bo[3] == le) or  # across the top
+                (bo[4] == le and bo[5] == le and bo[6] == le) or  # across the middle
+                (bo[7] == le and bo[8] == le and bo[9] == le) or  # across the bottom
+                (bo[1] == le and bo[4] == le and bo[7] == le) or  # down the left side
+                (bo[2] == le and bo[5] == le and bo[8] == le) or  # down the middle
+                (bo[3] == le and bo[6] == le and bo[9] == le) or  # down the right side
+                (bo[1] == le and bo[5] == le and bo[9] == le) or  # diagonal
+                (bo[3] == le and bo[5] == le and bo[7] == le))  # diagonal
+
     def isSpaceFree(self, board, move):
         return board[move] == ' '
+
     def isBoardFull(self, board):
         for i in range(1, 10):
             if self.isSpaceFree(board, i):
                 return False
         return True
+
     def makeMove(self, board, letter, move):
-       board[move] = letter
+        board[move] = letter
+
     def getBoardCopy(self, board):
         boardCopy = []
         for i in board:
             boardCopy.append(i)
         return boardCopy
-    def getPlayerMove(self, board): 
-           move = input('Make your move')
-           return int(move)
-       
+
+    def getPlayerMove(self, board):
+        move = input('Make your move')
+        return int(move)
+
     def Two_Player_Game(self):
-            theBoard = [''] * 10
-            player1Letter,  player2letter = self.inputPlayerLetter()
+        print("Welcome to Tic-Tac-Toe!")
+        while True:
+            theBoard = [' '] * 10
+            player1Letter, player2Letter = self.inputPlayerLetter()
             turn = self.whoGoesFirst()
-            print(turn + ' will go  first.')
+            print(turn + ' will go first')
             gameIsPlaying = True
-            
             while gameIsPlaying:
                 if turn == 'player 1':
                     self.drawBoard(theBoard)
@@ -69,35 +88,41 @@ class Tic_Tac_Toe:
                     self.makeMove(theBoard, player1Letter, move)
                     if self.isWinner(theBoard, player1Letter):
                         self.drawBoard(theBoard)
-                        print('The game is a tie!')
+                        print("Player One has Won the Game!")
                         break
                     else:
-                        turn = 'player 2'
-                else:
+                        if self.isBoardFull(theBoard):
+                            self.drawBoard(theBoard)
+                            print('The game is a Tie!')
+                            break
+                        else:
+                            turn = 'player 2'
+                # Player Two Turn
+                elif turn == 'player 2':
+                    self.drawBoard(theBoard)
                     move = self.getPlayerMove(theBoard)
-                    self.makeMove(theBoard, player2letter, move)
-                    if self.isWinner(theBoard, player2letter):
+                    self.makeMove(theBoard, player2Letter, move)
+                    if self.isWinner(theBoard, player2Letter):
                         self.drawBoard(theBoard)
-                        print("Player 2 has won")
-                        self.gameIsPlaying = False
-                    else:
-                        turn = 'player 1'
-                    print('Do you want to play again?(yes or no)')
-                    if not input().lower().startswith('y'):
+                        print("Player Two has Won the Game!")
                         break
-<<<<<<< HEAD
-                    turn = 'player 1'
+                    else:
+                        if self.isBoardFull(theBoard):
+                            self.drawBoard(theBoard)
+                            print('The game is a Tie!')
+                            break
+                        else:
+                            turn = 'player 1'
+            break
 
-=======
->>>>>>> 49b2508f9322de39d05e00c1ca5a08eeeff3520c
+
 class Tic_Tac_Toe_AI(Tic_Tac_Toe):
-    def __init__(self, board, move, letter):
-        super().__init__(board, move, letter)
     def whoGoesFirst(self):
         if random.randint(0, 1) == 0:
             return 'computer'
         else:
             return 'player'
+
     def chooseRandomMoveFromList(self, board, movesList):
         possibleMoves = []
         for i in movesList:
@@ -107,6 +132,7 @@ class Tic_Tac_Toe_AI(Tic_Tac_Toe):
                 return random.choice(possibleMoves)
             else:
                 return None
+
     def getComputerMove(self, board, computerLetter):
         if computerLetter == 'X':
             playerLetter = '0'
@@ -122,12 +148,13 @@ class Tic_Tac_Toe_AI(Tic_Tac_Toe):
                 self.makeMove(boardCopy, playerLetter, i)
                 if self.isWinner(boardCopy, playerLetter):
                     return i
-        move = self.chooseRandomMoveFromList(board, [1,3,7,9])
+        move = self.chooseRandomMoveFromList(board, [1, 3, 7, 9])
         if move != None:
             return move
         if self.isSpaceFree(board, 5):
             return 5
         return self.chooseRandomMoveFromList(board, [2, 4, 6, 8])
+
     def AIGame(self):
         while True:
             theBoard = [' '] * 10
@@ -155,20 +182,10 @@ class Tic_Tac_Toe_AI(Tic_Tac_Toe):
                         self.gameIsPlaying = False
                     else:
                         turn = 'player'
-<<<<<<< HEAD
-                    print('Do you want to play again?(yes or no)')
-                    if not input().lower().startswith('y'):
-                        break 
-
-
-                
-game = Tic_Tac_Toe()             
-=======
                 print('Do you want to play again?(yes or no)')
                 if not input().lower().startswith('y'):
                     break
 
+
 game = Tic_Tac_Toe()
 game.Two_Player_Game()
-            
->>>>>>> 49b2508f9322de39d05e00c1ca5a08eeeff3520c
