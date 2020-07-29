@@ -3,11 +3,11 @@ class Tic_Tac_Toe:
     def __init__(self):
         print("Initialized")
     def drawBoard(self, board):
-       print(board[1] + '|' + board[2] + '|' + board[3])
+       print(self.board[1] + '|' + self.board[2] + '|' + self.board[3])
        print('---')
-       print(board[4] + '|' + board[5] + '|' + board[6])
+       print(self.board[4] + '|' + self.board[5] + '|' + self.board[6])
        print('---')
-       print(board[7] + '|' + board[8] + '|' + board[9])
+       print(self.board[7] + '|' + self.board[8] + '|' + self.board[9])
     def inputPlayerLetter(self):
         letter = ''
         while not (letter == 'X' or letter == 'O'):
@@ -28,9 +28,9 @@ class Tic_Tac_Toe:
     def isWinner(self, bo, le):
            # Given a board and a player's letter, this function returns True if that player has won.
     # We use bo instead of board and le instead of letter so we don't have to type as much.
-        return ((bo[1] == le and bo[2] == le and bo[3] == le) or # across the top
-                (bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle
-                (bo[7] == le and bo[8] == le and bo[9] == le) or # across the bottom
+        return ((self.bo[1] == self.le and self.bo[2] == self.le and self.bo[3] == self.le) or # across the top
+                (self.bo[4] == self.le and self.bo[5] == self.le and self.bo[6] == self.le) or # across the middle
+                (self.bo[7] == self.le and self.bo[8] == self.le and self.bo[9] == self.le) or # across the bottom
                 (bo[1] == le and bo[4] == le and bo[7] == le) or # down the left side
                 (bo[2] == le and bo[5] == le and bo[8] == le) or # down the middle
                 (bo[3] == le and bo[6] == le and bo[9] == le) or # down the right side
@@ -83,7 +83,10 @@ class Tic_Tac_Toe:
                         print("Player 2 Wins!")
                         break
                     turn = 'player 1'
+
 class Tic_Tac_Toe_AI(Tic_Tac_Toe):
+    def __init__(self, board, move, letter):
+        super().__init__(board, move, letter)
     def whoGoesFirst(self):
         if random.randint(0, 1) == 0:
             return 'computer'
@@ -148,11 +151,8 @@ class Tic_Tac_Toe_AI(Tic_Tac_Toe):
                         turn = 'player'
                     print('Do you want to play again?(yes or no)')
                     if not input().lower().startswith('y'):
-                        break
-    
-                    
-        
-        
-    
+                        break 
+
+
                 
-game = Tic_Tac_Toe()               
+game = Tic_Tac_Toe()             
