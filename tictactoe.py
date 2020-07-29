@@ -1,5 +1,6 @@
 import random
 
+
 class Tic_Tac_Toe:
     def drawBoard(self, board):
         # "board" is a list of 10 strings representing the board (ignore index 0)
@@ -121,137 +122,19 @@ class Tic_Tac_Toe:
                 break
 
 
-class Tic_Tac_Toe_AI:
 
-    def whoGoesFirst(self):
-        if random.randint(0, 1) == 0:
-            return 'computer'
-        else:
-            return 'player'
 
-    def chooseRandomMoveFromList(self, board, movesList):
-        possibleMoves = []
-        for i in movesList:
-            if Tic_Tac_Toe().isSpaceFree(board, i):
-                possibleMoves.append(i)
-            if len(possibleMoves) != 0:
-                return random.choice(possibleMoves)
-            else:
-                return None
-
-    def getComputerMove(self, board, computerLetter):
-        # Given a board and the computer's letter, determine where to move and return that move.
-        if computerLetter == 'X':
-            playerLetter = 'O'
-        else:
-            playerLetter = 'X'
-
-        # Here is our algorithm for our Tic Tac Toe AI:
-        # First, check if we can win in the next move
-        for i in range(1, 10):
-            copy = Tic_Tac_Toe().getBoardCopy(board)
-            if Tic_Tac_Toe().isSpaceFree(copy, i):
-                Tic_Tac_Toe().makeMove(copy, computerLetter, i)
-                if Tic_Tac_Toe().isWinner(copy, computerLetter):
-                    return i
-
-        # Check if the player could win on his next move, and block them.
-        for i in range(1, 10):
-            copy = Tic_Tac_Toe().getBoardCopy(board)
-            if Tic_Tac_Toe().isSpaceFree(copy, i):
-                Tic_Tac_Toe().makeMove(copy, playerLetter, i)
-                if Tic_Tac_Toe().isWinner(copy, playerLetter):
-                    return i
-
-        # Try to take one of the corners, if they are free.
-        move = self.chooseRandomMoveFromList(board, [1, 3, 7, 9])
-        if move != None:
-            return move
-
-        # Try to take the center, if it is free.
-        if Tic_Tac_Toe().isSpaceFree(board, 5):
-            return 5
-
-        # Move on one of the sides.
-        return self.chooseRandomMoveFromList(board, [2, 4, 6, 8])
-
-    def AIGame(self):
-        while True:
-            theBoard = [' '] * 10
-            playerLetter, computerLetter = Tic_Tac_Toe().inputPlayerLetter()
-            turn = self.whoGoesFirst()
-            print('The ' + turn + ' will go first')
-            gameIsPlaying = True
-
-            while gameIsPlaying:
-                #Player's turn
-                if turn == 'player':
-                    Tic_Tac_Toe().drawBoard(theBoard)
-                    move = Tic_Tac_Toe().getPlayerMove(theBoard)
-                    Tic_Tac_Toe().makeMove(theBoard, playerLetter, move)
-
-                    if Tic_Tac_Toe().isWinner(theBoard, playerLetter):
-                        Tic_Tac_Toe().drawBoard(theBoard)
-                        print('You have won! Congratulatons!')
-                        break
-                    
-                    else:
-                        if Tic_Tac_Toe().isBoardFull(theBoard):
-                            Tic_Tac_Toe().drawBoard(theBoard)
-                            print('The game is a tie!')
-                            break
-                        else:
-                            turn = 'computer'
-
-                #Computer's turn
-                else:
-                    Tic_Tac_Toe().drawBoard(theBoard)
-                    move = self.getComputerMove(theBoard, computerLetter)
-                    Tic_Tac_Toe().makeMove(theBoard, computerLetter, move)
-
-                    if Tic_Tac_Toe().isWinner(theBoard, computerLetter):
-                        Tic_Tac_Toe().drawBoard(theBoard)
-                        print("The computer has won. Better luck next time.")
-                        self.gameIsPlaying = False
-                    
-                    else:
-                        if Tic_Tac_Toe().isBoardFull(theBoard):
-                            Tic_Tac_Toe().drawBoard(theBoard)
-                            print('The game is a tie')
-                            break
-                        else:
-                            turn = 'player'
-
-            print('Do you want to play again? (yes or no)')
-
-            if not input().lower().startswith('y'):
-                break
+print('''Hello! Welcome to Tic-Tac-Toe. Here is a small picture of the game boardL
+            |     |
+         1  |  2  |  3
+       -----|-----|-----
+         4  |  5  |  6
+       -----|-----|-----
+         7  |  8  |  9
+            |     |
+        To make your move, type a number between 1 and 9 to place your letter in the corresponding spot as shown in the example. 
+        ''')
 
 
 game = Tic_Tac_Toe()
-aigame = Tic_Tac_Toe_AI()
-
-print('''Hello! Welcome to Tic-Tac-Toe. Here is a small picture of the game boardL
-
-     |     |
-  1  |  2  |  3
------|-----|-----
-  4  |  5  |  6
------|-----|-----
-  7  |  8  |  9
-     |     |
-
-To make your move, type a number between 1 and 9 to place your letter in the corresponding spot as shown in the example. 
-''')
-
-print('''Please choose from the following: 
-
-Player vs Player (Type 1)
-Player vs Computer (Type 2)''')
-
-option = input()
-
-if option == '1':
-    game.Two_Player_Game()
-else:
-    aigame.AIGame()
+game.Two_Player_Game()
